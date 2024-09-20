@@ -1,10 +1,20 @@
-body {
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
   background-image: url('./logos/background.jpeg'); /* Replace with your image path */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  box-sizing: border-box;
 }
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 
 
 /* Add a semi-transparent overlay to improve content visibility */
@@ -15,11 +25,12 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color:transparent;/* Adjust opacity as needed */
+  background-color: transparent; /* Adjust opacity as needed */
   z-index: -1;
 }
 
 .header {
+  overflow: hidden;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 1rem;
@@ -46,7 +57,6 @@ body::before {
   height: 50px;
   margin-left: 1rem;
   margin-right: 1rem;
-
 }
 
 .header-buttons {
@@ -69,11 +79,14 @@ body::before {
   background-color: transparent;
   border-radius: 10px;
   padding: 15px;
+  overflow-x: hidden; /* Avoid horizontal scrolling */
 }
+
 .game-container > div:first-child {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin: 20px;
 }
 .game-container > div:first-child .mt-24 {
   flex-grow: 0;
@@ -82,6 +95,7 @@ body::before {
   flex-grow: 1;
   display: flex;
   align-items: flex-end;
+  margin: 10px;
 }
 .game-container > div:nth-child(2) {
   display: flex;
@@ -90,11 +104,14 @@ body::before {
 }
 .game-board {
   width: 100%;
-  max-width: 700px; /* Reduced from 800px */
+  max-width: 700px; 
 }
 .game-container > div:last-child {
   display: flex;
   flex-direction: column;
+  margin-left: 60px;
+  overflow: hidden;
+
 }
 .game-rules {
   flex-grow: 0;
@@ -102,7 +119,7 @@ body::before {
   flex-direction: column;
   justify-content: flex-start;
   overflow-y: auto;
-  max-height: 240px;
+  max-height: auto;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 1rem;
@@ -154,7 +171,7 @@ body::before {
   align-items: center;
   justify-content: space-between;
   height: 70px;
-  width: 103%;
+  width: 100%;
   margin-bottom: 10px;
   margin-left: 40px;
   
@@ -526,23 +543,108 @@ body::before {
 }
 
 
-
-
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-  .game-container {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
+/* Force desktop layout on all screen sizes */
+@media screen and (max-width: 1024px) {
+  html, body {
+    min-width: 1024px; /* Minimum width to prevent layout from breaking */
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
   }
 
-  .game-container > div:first-child,
-  .game-container > div:last-child {
-    padding: 1rem;
+  .game-container {
+    grid-template-columns: minmax(180px, 1fr) minmax(500px, 2.5fr) minmax(180px, 1fr);
+    gap: 1.5rem;
+    width: 1024px; /* Set a fixed width */
+    margin: 0 auto; /* Center the container */
+  }
+
+  .header {
+    width: 1024px; /* Match the game container width */
+    margin: 0 auto; /* Center the header */
+  }
+
+  .game-board-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .game-board {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
   }
 
   .game-rules {
-    margin-top: 1rem;
+    flex-grow: 1;
+    max-height: 240px;
+   
+   }
+
+  .board-grid {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .board-cell {
+    width: 64px;
+    height: 64px;
+  }
+
+  .vertical-team-select {
+    width: 80px;
+  }
+
+  .horizontal-team-select {
+    margin-bottom: 10px;
+    margin-left: 40px;
+  }
+
+  /* Ensure all font sizes remain the same */
+  body {
+    font-size: 16px; /* Set a base font size */
+  }
+
+  .header-title {
+    font-size: 2rem;
+  }
+
+  .team-name {
+    font-size: 30px;
+  }
+
+  .team-score {
+    font-size: 30px;
+  }
+
+  .game-button {
+    font-size: 18px;
+  }
+
+  /* Disable any mobile-specific hover effects */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Force background image to cover the entire width */
+  body {
+    background-size: cover;
+    background-attachment: fixed;
   }
 }
 
+/* Additional styles to handle touch devices */
+@media (hover: none) {
+  .board-cell:hover {
+    background-color: inherit; /* Disable hover effect on touch devices */
+  }
 
+  .team-option:hover {
+    filter: none; /* Disable hover effect on touch devices */
+  }
+
+  .game-button:hover {
+    background: linear-gradient(to bottom, #ff7903, #f6ff00); /* Reset to default state */
+  }
+}

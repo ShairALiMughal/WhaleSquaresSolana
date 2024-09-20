@@ -9,7 +9,7 @@ import Input from './Input';
 import Label from './Label';
 import TeamSelect from './TeamSelect';
 import './WhaleSquaresOnSolana.css';
-import { Dialog, DialogContent, DialogTitle, DialogClose } from '@radix-ui/react-dialog';
+import { Dialog, DialogContent, DialogTitle } from '@radix-ui/react-dialog';
 import logo from './logos/logo.jpeg'
 import leftwhale from './logos/leftwhale.png';
 import rightwhale from './logos/rightwhale.png'
@@ -100,7 +100,7 @@ const WhaleSquaresOnSolana = () => {
   const [textAngle, setTextAngle] = useState(0);
   const [textColor, setTextColor] = useState('#FFFFFF');
   const [selectionType, setSelectionType] = useState('name');
-  const dialogRef = useRef(null);
+
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
 
@@ -273,7 +273,7 @@ const WhaleSquaresOnSolana = () => {
     <div className={`min-h-screen relative ${darkMode ? 'dark' : ''}`}>
       <header className="header">
         <div className="header-content">
-        <img src={logo} alt="Logo" className="header-logo" />
+          <img src={logo} alt="Logo" className="header-logo" />
           <h1 className="header-title">Whale Squares on Solana</h1>
         </div>
         <div className="header-buttons">
@@ -296,79 +296,72 @@ const WhaleSquaresOnSolana = () => {
           </button>
         </div>
       </header>
-     
 
-      <div className="game-container grid grid-cols-[min-content,1fr,min-content] gap-2">
-  {/* First column: Buttons */}
-  <div className="p-1">
-      <div className="mt-24 flex flex-col space-y-5">
-        <button onClick={generateRandomScores} className="game-button">
-          Test Generate Scores
-        </button>
-        <button onClick={shuffleBoard} className="game-button">
-          Shuffle Board
-        </button>
-        <button onClick={nameNumbersTest} className="game-button">
-          Name Numbers Test
-        </button>
-        <div className="mt-2 flex justify-center">
-          <img src={leftwhale} alt="Placeholder image" className="rounded-lg" />
-        </div>
-      </div>
-    </div>
-
-  {/* Second column: Game board (full width) */}
-  <div className="p-4">
-    <div className="game-board">
-      <div className="horizontal-team-select">
-        <TeamSelect value={team1} onChange={setTeam1} teams={NFL_TEAMS} score={team1Score}/>
-       
-      </div>
-      <div className="board-wrapper">
-        <div className="vertical-team-select">
-          <TeamSelect value={team2} onChange={setTeam2} teams={NFL_TEAMS} score={team2Score} vertical={true} />
-         
-        </div>
-        <div className="board-grid">
-          <div className="board-row">
-            <div className="board-cell header-cell"></div>
-            {colNumbers.map(col => (
-              <div key={col} className={`board-cell header-cell ${col === team1Score ? 'winner-cell' : ''}`}>
-                {col}
-              </div>
-            ))}
-          </div>
-          {rowNumbers.map((row, rowIndex) => (
-            <div key={row} className="board-row">
-              <div className={`board-cell header-cell ${row === team2Score ? 'winner-cell' : ''}`}>
-                {row}
-              </div>
-              {colNumbers.map((col, colIndex) => renderSquare(rowIndex, colIndex))}
+      <div className="game-container">
+        <div className="game-sidebar left-sidebar">
+          <div className="mt-24 flex flex-col space-y-5">
+            <button onClick={generateRandomScores} className="game-button">
+              Test Generate Scores
+            </button>
+            <button onClick={shuffleBoard} className="game-button">
+              Shuffle Board
+            </button>
+            <button onClick={nameNumbersTest} className="game-button">
+              Name Numbers Test
+            </button>
+            <div className="mt-2 flex justify-center">
+              <img src={leftwhale} alt="Left Whale" className="rounded-lg whale-image" />
             </div>
-          ))}
+          </div>
+        </div>
+
+        <div className="game-board-container">
+          <div className="game-board">
+            <div className="horizontal-team-select">
+              <TeamSelect value={team1} onChange={setTeam1} teams={NFL_TEAMS} score={team1Score} />
+            </div>
+            <div className="board-wrapper">
+              <div className="vertical-team-select">
+                <TeamSelect value={team2} onChange={setTeam2} teams={NFL_TEAMS} score={team2Score} vertical={true} />
+              </div>
+              <div className="board-grid">
+                <div className="board-row">
+                  <div className="board-cell header-cell"></div>
+                  {colNumbers.map(col => (
+                    <div key={col} className={`board-cell header-cell ${col === team1Score ? 'winner-cell' : ''}`}>
+                      {col}
+                    </div>
+                  ))}
+                </div>
+                {rowNumbers.map((row, rowIndex) => (
+                  <div key={row} className="board-row">
+                    <div className={`board-cell header-cell ${row === team2Score ? 'winner-cell' : ''}`}>
+                      {row}
+                    </div>
+                    {colNumbers.map((col, colIndex) => renderSquare(rowIndex, colIndex))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="game-sidebar right-sidebar">
+          <div className={`game-rules ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+            <h2>Rules</h2>
+            <p>Amount solana per Square</p>
+            <ul>
+              <li>1st Quarter Winner $250</li>
+              <li>2nd Quarter Winner $500</li>
+              <li>3rd Quarter Winner $250</li>
+              <li>4th Quarter Winner $1000</li>
+            </ul>
+          </div>
+          <div className="mt-16 flex justify-center">
+            <img src={rightwhale} alt="Right Whale" className="rounded-lg whale-image" />
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  {/* Third column: Currently empty */}
-  <div>
-      <div className={`game-rules ${darkMode ? 'dark-mode' : 'light-mode'}`}>
-        <h2>Rules</h2>
-        <p>Amount solana per Square</p>
-        <ul>
-          <li>1st Quarter Winner $250</li>
-          <li>2nd Quarter Winner $500</li>
-          <li>3rd Quarter Winner $250</li>
-          <li>4th Quarter Winner $1000</li>
-        </ul>
-      </div>
-      <div className="mt-16 flex justify-center">
-        <img src={rightwhale} alt="Placeholder image" className="rounded-lg " />
-      </div>
-    </div>
-    </div>
-
 
       {/* Dialog for setting text style */}
 <Dialog open={isNameDialogOpen} onOpenChange={setIsNameDialogOpen}>
