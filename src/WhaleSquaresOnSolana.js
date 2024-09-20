@@ -301,29 +301,33 @@ const WhaleSquaresOnSolana = () => {
       <div className="game-container grid grid-cols-[min-content,1fr,min-content] gap-2">
   {/* First column: Buttons */}
   <div className="p-1">
-  <div className="mt-24 flex flex-col space-y-5">
-      <Button onClick={generateRandomScores} className="bg-green-500 hover:bg-green-600">Generate Random Scores</Button>
-      <Button onClick={shuffleBoard} className="bg-blue-500 hover:bg-blue-600">Shuffle Board</Button>
-      <Button onClick={nameNumbersTest} className="bg-purple-500 hover:bg-purple-600">Name Numbers Test</Button>
-      <div className="mt-2 flex justify-center">
-      </div>    
-      <img src={leftwhale} alt="Placeholder image" className="rounded-lg shadow-md" />
-    
- 
+      <div className="mt-24 flex flex-col space-y-5">
+        <button onClick={generateRandomScores} className="game-button">
+          Test Generate Scores
+        </button>
+        <button onClick={shuffleBoard} className="game-button">
+          Shuffle Board
+        </button>
+        <button onClick={nameNumbersTest} className="game-button">
+          Name Numbers Test
+        </button>
+        <div className="mt-2 flex justify-center">
+          <img src={leftwhale} alt="Placeholder image" className="rounded-lg" />
+        </div>
+      </div>
     </div>
-  </div>
 
   {/* Second column: Game board (full width) */}
   <div className="p-4">
     <div className="game-board">
       <div className="horizontal-team-select">
-        <TeamSelect value={team1} onChange={setTeam1} teams={NFL_TEAMS} />
-        <span className="team-score">{team1Score}</span>
+        <TeamSelect value={team1} onChange={setTeam1} teams={NFL_TEAMS} score={team1Score}/>
+       
       </div>
       <div className="board-wrapper">
         <div className="vertical-team-select">
-          <TeamSelect value={team2} onChange={setTeam2} teams={NFL_TEAMS} vertical={true} />
-          <span className="team-score">{team2Score}</span>
+          <TeamSelect value={team2} onChange={setTeam2} teams={NFL_TEAMS} score={team2Score} vertical={true} />
+         
         </div>
         <div className="board-grid">
           <div className="board-row">
@@ -349,21 +353,21 @@ const WhaleSquaresOnSolana = () => {
 
   {/* Third column: Currently empty */}
   <div>
-    <div className={`game-rules ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'} rounded-lg p-4`}>
-      <h2 className={`text-xl font-bold mb-2 ${darkMode ? 'text-gray-100' : 'text-gray-900'}`}>Rules</h2>
-      <p>Amount solana per Square</p>
-      <ul>
-        <li>1st Quarter Winner $250</li>
-        <li>2nd Quarter Winner $500</li>
-        <li>3rd Quarter Winner $250</li>
-        <li>4th Quarter Winner $1000</li>
-      </ul>
+      <div className={`game-rules ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+        <h2>Rules</h2>
+        <p>Amount solana per Square</p>
+        <ul>
+          <li>1st Quarter Winner $250</li>
+          <li>2nd Quarter Winner $500</li>
+          <li>3rd Quarter Winner $250</li>
+          <li>4th Quarter Winner $1000</li>
+        </ul>
+      </div>
+      <div className="mt-16 flex justify-center">
+        <img src={rightwhale} alt="Placeholder image" className="rounded-lg " />
+      </div>
     </div>
-    <div className="mt-16 flex justify-center">
-      <img src={rightwhale} alt="Placeholder image" className="rounded-lg shadow-md" />
     </div>
-  </div>
-</div>
 
 
       {/* Dialog for setting text style */}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const TeamSelect = ({ value, onChange, teams, vertical = false }) => {
+const TeamSelect = ({ value, onChange, teams, vertical = false, score }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -11,7 +11,10 @@ const TeamSelect = ({ value, onChange, teams, vertical = false }) => {
         onClick={() => setIsOpen(!isOpen)}
       >
         <img src={value.logo} alt={`${value.name} logo`} className="team-logo" />
-        <span className="team-name">{value.name}</span>
+        <div className="team-info">
+          <span className="team-name">{value.name}</span>
+          <span className="team-score">{score}</span>
+        </div>
       </div>
       {isOpen && (
         <div className="team-dropdown">
